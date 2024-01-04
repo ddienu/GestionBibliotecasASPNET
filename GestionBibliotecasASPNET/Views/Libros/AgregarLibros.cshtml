@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model Libros
+
+    <h1>Bienvenidos a la página de agregar libros</h1>
+
+    <form asp-action="AgregarLibros" asp-controller="Libros" method="post">
+        <label>Ingrese el nombre del libro que desea agregar: </label>
+        <input asp-for="NombreLibro"/>
+
+        <br />
+        <br />
+
+        <label>Ingrese el nombre del autor del libro que desea agregar: </label>
+        <input asp-for="AutorLibro" />
+
+        <br />
+        <br />
+
+        <label>¿El libro está disponible?</label>
+        <select asp-for="Disponible">
+            <option value="True">Si</option>
+            <option value="False">No</option>
+        </select>
+
+        <br />
+        <br />
+
+        <input type="submit" value="Agregar" />
+    </form>
+}

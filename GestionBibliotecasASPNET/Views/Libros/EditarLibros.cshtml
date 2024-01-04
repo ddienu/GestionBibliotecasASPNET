@@ -1,0 +1,22 @@
+﻿@*
+	@Model Libros
+*@
+@{
+    @model Libros;
+
+    <h1>Página de Editar Libro</h1>
+
+    <form asp-action="EditarLibros" asp-controller="Libros" method="post">
+        <label>Seleccione la parte a editar:</label>
+        <select asp-for="ParteAEditar">
+            <option value="NombreLibro">Nombre del Libro</option>
+            <option value="AutorLibro">Autor del Libro</option>
+            <option value="Disponible">Disponibilidad</option>
+        </select>
+
+        <label>Nuevo valor:</label>
+        <input asp-for="NuevoValor" />
+
+        <input type="submit" value="Editar" />
+    </form>
+}
