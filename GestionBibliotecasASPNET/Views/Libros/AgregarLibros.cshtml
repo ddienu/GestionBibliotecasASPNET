@@ -7,14 +7,23 @@
     <h1>Bienvenidos a la página de agregar libros</h1>
 
     <form asp-action="AgregarLibros" asp-controller="Libros" method="post">
+
+        <label>El ID del libro es: </label>
+        <input asp-for="IdLibro" value="@ViewBag.nuevoID" readonly />
+
+        <br />
+        <br />
+
         <label>Ingrese el nombre del libro que desea agregar: </label>
-        <input asp-for="NombreLibro"/>
+        <input asp-for="NombreLibro" value="@ViewBag.NombreLibro"/>
+        <span asp-validation-for="NombreLibro" style="color: red"></span>
 
         <br />
         <br />
 
         <label>Ingrese el nombre del autor del libro que desea agregar: </label>
-        <input asp-for="AutorLibro" />
+        <input asp-for="AutorLibro" value="@ViewBag.AutorLibro" />
+        <span asp-validation-for="AutorLibro" style="color: red"></span>
 
         <br />
         <br />
@@ -29,5 +38,12 @@
         <br />
 
         <input type="submit" value="Agregar" />
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
     </form>
 }

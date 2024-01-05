@@ -1,4 +1,5 @@
-﻿using GestionBibliotecasASPNET.Models;
+﻿using GestionBibliotecasASPNET.Helpers;
+using GestionBibliotecasASPNET.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionBibliotecasASPNET.Controllers
@@ -17,11 +18,39 @@ namespace GestionBibliotecasASPNET.Controllers
         {
             return View(_libros);
         }
+        [HttpGet]
+        public IActionResult AgregarLibros()
+        {
+            int nuevoID = GeneradorIDLibro.GeneradorID(_libros);
+            ViewBag.nuevoID = nuevoID;
+            return View(new Libros());
+        }
 
+        [HttpPost]
         public IActionResult AgregarLibros(Libros libro)
         {
-            _libros.Add(new Libros(libro.IdLibro, libro.NombreLibro, libro.AutorLibro, libro.Disponible));
-            return View();
+            if (ModelState.IsValid)
+            {
+                _libros.Add(new Libros(libro.IdLibro, libro.NombreLibro, libro.AutorLibro, libro.Disponible));
+                return RedirectToAction("Index", "Libros");
+            }
+            else
+            {
+                TempData["Error"] = "Los campos deben ser diligenciados";
+                if (libro.NombreLibro != null)
+                {
+                    ViewBag.NombreLibro = libro.NombreLibro;
+                }
+
+                if (libro.AutorLibro != null)
+                {
+                    ViewBag.AutorLibro = libro.AutorLibro;
+                }
+                int nuevoID = GeneradorIDLibro.GeneradorID(_libros);
+                ViewBag.nuevoID = nuevoID;
+                libro.IdLibro = nuevoID;
+                return View(libro);
+            }
         }
 
         public IActionResult QuitarLibros(Libros libro)
@@ -30,7 +59,7 @@ namespace GestionBibliotecasASPNET.Controllers
             return View();
         }
 
-        //[HttpPost]
+        [HttpPost]
         public IActionResult EditarLibros(Libros libro)
         {
             switch (libro.ParteAEditar)
