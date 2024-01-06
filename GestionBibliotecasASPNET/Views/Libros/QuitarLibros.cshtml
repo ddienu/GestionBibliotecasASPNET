@@ -2,5 +2,36 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    <h1>Esta es la página de Quitar Libros.</h1>
+	@model List<Libros>
+
+	<h2>Lista de libros de la biblioteca: </h2>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nombre</th>
+				<th>Autor</th>
+				<th>Disponible</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Libros libro in Model)
+			{
+				<tr>
+					<td width="60px">@libro.IdLibro</td>
+					<td width="120px">@libro.NombreLibro</td>
+					<td width="120px">@libro.AutorLibro</td>
+					<td width="120px">@(libro.Disponible ? "Sí" : "No")</td>
+					<td></td>
+					<td></td>
+					<td>
+						<form asp-controller="Libros" asp-action="QuitarLibros" method="post">
+							<input type="hidden" name="IdLibro" value="@libro.IdLibro" />
+							<input type="submit" value="Eliminar Libro" />
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }

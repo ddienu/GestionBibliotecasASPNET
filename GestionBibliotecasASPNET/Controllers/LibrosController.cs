@@ -1,6 +1,7 @@
 ﻿using GestionBibliotecasASPNET.Helpers;
 using GestionBibliotecasASPNET.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GestionBibliotecasASPNET.Controllers
 {
@@ -52,11 +53,17 @@ namespace GestionBibliotecasASPNET.Controllers
                 return View(libro);
             }
         }
+        [HttpGet]
+        public IActionResult QuitarLibros()
+        {
+            return View(_libros);
+        }
 
+        [HttpPost]
         public IActionResult QuitarLibros(Libros libro)
         {
-            _libros.Remove(libro);
-            return View();
+            _libros.RemoveAt(libro.IdLibro - 1);
+            return RedirectToAction("Index", "Libros");
         }
 
         [HttpPost]
